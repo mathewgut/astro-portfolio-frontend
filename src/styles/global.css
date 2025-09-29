@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: aurora;
+  src: url(./fonts/aurora-24.ttf);
+}
