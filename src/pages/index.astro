@@ -17,14 +17,15 @@ const pageTitle = "Mathew Gutoskie"
 	</head>
 	<body class="flex justify-center h-svh w-svw font-[vcr]">
 		<Navigation />
-		<main class="flex flex-col px-4 justify-center h-full w-full uppercase">
+		<main class="flex flex-col px-4 justify-center h-full w-full ">
 			<section class="flex flex-col items-center">
-				<section class=" flex w-70 flex-wrap gap-2 justify-center items-center mt-10">
+				<section class="uppercase flex w-70 flex-wrap gap-2 justify-center items-center">
 					<IndexButton client:load text="Blog" link="/blog"/>
 					<IndexButton client:load text="Work" link="/work"/>
 					<IndexButton client:load text="About" link="/about"/>
 					<IndexButton client:load text="Contact" link="/contact"/>
 				</section>
+				<a href="https://github.com/mathewgut/astro-portfolio-frontend" class="mt-10 text-xs hover:underline">Frontend code</a>
 			</section>
 		</main>
 	</body>
