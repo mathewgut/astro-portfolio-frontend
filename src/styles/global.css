@@ -4,3 +4,8 @@
   font-family: aurora;
   src: url(./fonts/aurora-24.ttf);
 }
+
+@font-face {
+  font-family: vcr;
+  src: url(./fonts/vcr.ttf);
+}

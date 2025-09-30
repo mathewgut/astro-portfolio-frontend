@@ -1,10 +1,10 @@
 ---
 import Navigation from "../components/Navigation.astro";
+import IndexButton from "../components/IndexButton.tsx";
 import "../styles/global.css";
 
 const pageTitle = "Mathew Gutoskie"
 
-const blockButtonStyles = "transition w-30 h-20 bg-black text-white ease-in-out duration-200 hover:rounded-2xl"
 ---
 
 <html lang="en">
@@ -13,22 +13,19 @@ const blockButtonStyles = "transition w-30 h-20 bg-black text-white ease-in-out 
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Mathew Gutoskie</title>
+		<title>{pageTitle}</title>
 	</head>
-	<body class="flex justify-center h-svh w-svw">
+	<body class="flex justify-center h-svh w-svw font-[vcr]">
 		<Navigation />
-		<main class="flex flex-col px-4 justify-center h-full w-full mt-10 uppercase font-[aurora]">
+		<main class="flex flex-col px-4 justify-center h-full w-full uppercase">
 			<section class="flex flex-col items-center">
 				<section class=" flex w-70 flex-wrap gap-2 justify-center items-center mt-10">
-					<button class={blockButtonStyles}>Work</button>
-					<button class={blockButtonStyles}>Blog</button>
-					<button class={blockButtonStyles}>About</button>
-					<button class={blockButtonStyles}>Contact</button>
+					<IndexButton client:load text="Blog" link="/blog"/>
+					<IndexButton client:load text="Work" link="/work"/>
+					<IndexButton client:load text="About" link="/about"/>
+					<IndexButton client:load text="Contact" link="/contact"/>
 				</section>
-			
 			</section>
-
-
 		</main>
 	</body>
 </html>
