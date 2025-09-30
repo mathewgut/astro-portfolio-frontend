@@ -4,12 +4,16 @@ const buttonClasses = "uppercase font-semibold hover:underline hover:cursor-poin
 
 <nav class="flex flex-col gap-2 justify-center items-center fixed top-0 pt-2">
     <section class="flex gap-2">
-        <button class={buttonClasses}>
-            Home
-        </button>
+        <a href="/">
+            <button class={buttonClasses}>
+                Home
+            </button>
+        </a>
+        <a href="/blog">
         <button class={buttonClasses}>
             Blog
         </button>
+        </a>
         <button class={buttonClasses}>
             Work
         </button>

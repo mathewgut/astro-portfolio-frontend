@@ -11,25 +11,46 @@ export default function IndexButton({ text, link }: { text: string; link: string
     const isLeft = coord.x < window.innerWidth / 2;
     const isTop = (coord.y - 42) < window.innerHeight / 2 ;
     
-    let border:string;
+    let border = {};
 
-
-    if(isLeft && isTop) {
-        border = "2rem 0.5rem 0.5rem 0.5rem"
-    }
-    else if(!isLeft && isTop) {
-        border = "0.5rem 2rem 0.5rem 0.5rem"
-    }
-    else if(isLeft && !isTop) {
-        border = "0.5rem 0.5rem 0.5rem 2rem"
-    }
+    // motion apparently doesnt supporting animating with rem
+    // https://github.com/motiondivision/motion/issues/1243
+    if (isLeft && isTop) {
+        border = {
+            borderTopLeftRadius: "34px",
+            borderTopRightRadius: "4px",
+            borderBottomRightRadius: "4px",
+            borderBottomLeftRadius: "4px",
+        };
+    } 
+    else if (!isLeft && isTop) {
+        border = {
+            borderTopLeftRadius: "4px",
+            borderTopRightRadius: "34px",
+            borderBottomRightRadius: "4px",
+            borderBottomLeftRadius: "4px",
+        };
+    } 
+    else if (isLeft && !isTop) {
+        border = {
+            borderTopLeftRadius: "4px",
+            borderTopRightRadius: "4px",
+            borderBottomRightRadius: "4px",
+            borderBottomLeftRadius: "34px",
+        };
+    } 
     else {
-        border = "0.5rem 0.5rem 2rem 0.5rem"
+        border = {
+            borderTopLeftRadius: "4px",
+            borderTopRightRadius: "4px",
+            borderBottomRightRadius: "34px",
+            borderBottomLeftRadius: "4px",
+        };
     }
 
     return(
         <a href={link}>
-            <motion.button 
+            <motion.button
             onHoverStart={(e) => {
                 setHovered(true);
                 // find coords of button to pass to BitAnimation
@@ -40,24 +61,15 @@ export default function IndexButton({ text, link }: { text: string; link: string
                     x: Math.round(rect?.left + rect?.width / 2),
                     y: Math.round(rect?.bottom + rect?.height / 2)
                 });
-
-                console.log(coord);
             }}
 
             onHoverEnd={(e) => setHovered(false)}
-            whileHover={{
-                scale: 1.1,
-                borderRadius: border
-            }}
-            whileTap={{ scale: 0.9 }}
+            initial={{ borderRadius: "8px" }}
+            animate={hovered ? border : { borderRadius: "8px" }}
 
-            transition={{
-                duration: 0.25,
-                repeatType: 'reverse',
-                ease: 'easeInOut',
-            }}
+            transition={{ duration: 3, delay:0.5, ease: "easeInOut" }}
+            whileTap={{ scale: 0.9 }}
             
-            style={{ borderRadius: "0.5rem" }}
 
             className={blockButtonStyles}>
                 {text}
@@ -108,24 +120,24 @@ function BitAnimation ({position, count} : {position: {x:number, y:number}, coun
 
     return (
         <motion.article
-        onPointerOverCapture={(e) => e.stopPropagation()}
-        style={{ top: isTop ? position.y-100 : position.y -70 , left: isLeft ? position.x -35 : position.x +35 }} 
-        className={`absolute  w-1.5 h-1.5 bg-black z-0 pointer-events-none`}
-        initial={{ opacity: 0 }}
-        animate={{ 
-            x: xKeys[Math.floor(Math.random() * xKeys.length)],
-            y: yKeys[Math.floor(Math.random() * yKeys.length)],
-            rotate: [0, 90, 180, 270, 360],
-            opacity: [1, 0]
-         }}
-        transition={{ 
-            duration: 1.35, 
-            type: "tween", 
-            ease: "easeIn", 
-            repeat: Infinity,
-            repeatDelay: Math.random() * 0.1 + count/10,
-            delay: Math.random() * count/10
-        }}
+            onPointerOverCapture={(e) => e.stopPropagation()}
+            style={{ top: isTop ? position.y-100 : position.y -70 , left: isLeft ? position.x -35 : position.x +35 }} 
+            className={`absolute  w-1.5 h-1.5 bg-black z-0 pointer-events-none`}
+            initial={{ opacity: 0 }}
+            animate={{ 
+                x: xKeys[Math.floor(Math.random() * xKeys.length)],
+                y: yKeys[Math.floor(Math.random() * yKeys.length)],
+                rotate: [0, 90, 180, 270, 360],
+                opacity: [1, 0]
+            }}
+            transition={{ 
+                duration: 1.35, 
+                type: "tween", 
+                ease: "easeIn", 
+                repeat: Infinity,
+                repeatDelay: Math.random() * 0.1 + count/10,
+                delay: Math.random() * count/10
+            }}
         >
         
         </motion.article>
