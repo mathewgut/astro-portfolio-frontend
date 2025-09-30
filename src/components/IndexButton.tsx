@@ -59,7 +59,6 @@ export default function IndexButton({ text, link }: { text: string; link: string
             { Array.from({length: 12}).map((_, i) => 
                 <BitAnimation key={i} position={coord} />
             )}
-            
             </>
                 
             }
