@@ -5,23 +5,26 @@ export default function IndexButton({ text, link }: { text: string; link: string
     const [hovered, setHovered] = React.useState(false);
     const [coord, setCoord] = React.useState({ x: 0, y: 0 });
     
-    let blockButtonStyles = "w-30 h-20 bg-black text-white z-30" +
-    "hover:cursor-pointer relative  "
+    let blockButtonStyles = "w-30 h-20 bg-black text-white z-30 hover:cursor-pointer" +
+    " relative "
 
     const isLeft = coord.x < window.innerWidth / 2;
     const isTop = (coord.y - 42) < window.innerHeight / 2 ;
+    
+    let border:string;
+
 
     if(isLeft && isTop) {
-        blockButtonStyles += " hover:rounded-tl-4xl hover:skew-[20deg]"
+        border = "2rem 0.5rem 0.5rem 0.5rem"
     }
     else if(!isLeft && isTop) {
-         blockButtonStyles += " hover:rounded-tr-4xl hover:skew-x-6"
+        border = "0.5rem 2rem 0.5rem 0.5rem"
     }
     else if(isLeft && !isTop) {
-        blockButtonStyles += " hover:rounded-bl-4xl hover:-skew-y-6"
+        border = "0.5rem 0.5rem 0.5rem 2rem"
     }
     else {
-        blockButtonStyles += " hover:rounded-br-4xl hover:-skew-x-6"
+        border = "0.5rem 0.5rem 2rem 0.5rem"
     }
 
     return(
@@ -44,39 +47,40 @@ export default function IndexButton({ text, link }: { text: string; link: string
             onHoverEnd={(e) => setHovered(false)}
             whileHover={{
                 scale: 1.1,
+                borderRadius: border
             }}
+            whileTap={{ scale: 0.9 }}
+
             transition={{
                 duration: 0.25,
                 repeatType: 'reverse',
                 ease: 'easeInOut',
             }}
-           
+            
+            style={{ borderRadius: "0.5rem" }}
+
             className={blockButtonStyles}>
                 {text}
             </motion.button>
             {hovered &&
-            <> 
-            { Array.from({length: 12}).map((_, i) => 
-                <BitAnimation key={i} position={coord} />
-            )}
-            </>
-                
+                <> 
+                { Array.from({length: 16}).map((_, i) => 
+                    <BitAnimation count={i} key={i} position={coord} />
+                )}
+                </>
             }
         </a>
     )
 }
 
-function BitAnimation ({position} : {position: {x:number, y:number}}) {
+function BitAnimation ({position, count} : {position: {x:number, y:number}, count:number}) {
     const navBarHeight = 42;
     
     let xKeys = [
         [null, -25], [null, -30], [null, -35], [null, -40], [null, -45],
         [null, -50], [null, -55], [null, -60], [null, -65], [null, -70],
         [null, -75], [null, -80], [null, -85], [null, -90], [null, -95],
-        [null, -100], [null, -105], [null, -110], [null, -115], [null, -120],
-        [null, -125], [null, -130], [null, -135], [null, -140],
-        [null, -300], 
-        [null, -320], 
+        
     ];
 
     let yKeys = [
@@ -84,9 +88,7 @@ function BitAnimation ({position} : {position: {x:number, y:number}}) {
         [null, -45], [null, -50], [null, -55], [null, -60], [null, -65],
         [null, -70], [null, -75], [null, -80], [null, -85], [null, -90],
         [null, -95], [null, -100], [null, -105], [null, -110], [null, -115],
-        [null, -120], [null, -125], [null, -130], [null, -135],
-        [null, -280], 
-        [null, -295], 
+        
     ];
 
 
@@ -107,8 +109,8 @@ function BitAnimation ({position} : {position: {x:number, y:number}}) {
     return (
         <motion.article
         onPointerOverCapture={(e) => e.stopPropagation()}
-        style={{ top: isTop ? position.y-110 : position.y -50, left: isLeft ? position.x -35 : position.x +35 }} 
-        className={`absolute  w-2.5 h-2.5 bg-black z-0 pointer-events-none`}
+        style={{ top: isTop ? position.y-100 : position.y -70 , left: isLeft ? position.x -35 : position.x +35 }} 
+        className={`absolute  w-1.5 h-1.5 bg-black z-0 pointer-events-none`}
         initial={{ opacity: 0 }}
         animate={{ 
             x: xKeys[Math.floor(Math.random() * xKeys.length)],
@@ -117,12 +119,12 @@ function BitAnimation ({position} : {position: {x:number, y:number}}) {
             opacity: [1, 0]
          }}
         transition={{ 
-            duration: 1.2, 
+            duration: 1.35, 
             type: "tween", 
             ease: "easeIn", 
             repeat: Infinity,
-            repeatDelay: Math.random() * 0.7,
-            delay: Math.random() * 0.5
+            repeatDelay: Math.random() * 0.1 + count/10,
+            delay: Math.random() * count/10
         }}
         >
         
