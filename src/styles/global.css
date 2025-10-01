@@ -9,3 +9,13 @@
   font-family: vcr;
   src: url(./fonts/vcr.ttf);
 }
+
+@font-face {
+  font-family: terminal;
+  src: url(./fonts/terminal.ttf);
+}
+
+@font-face {
+  font-family: jetbrains-mono;
+  src: url(./fonts/jetbrains-mono.ttf);
+}
