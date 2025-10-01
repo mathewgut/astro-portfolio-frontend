@@ -3,8 +3,11 @@ import { motion } from "motion/react"
 
 export default function IndexButton({ text, link }: { text: string; link: string }) {
     const [hovered, setHovered] = React.useState(false);
+    const [fade, setFade] = React.useState(false);
     const [coord, setCoord] = React.useState({ x: 0, y: 0 });
     
+    const particleCount = 48;
+
     let blockButtonStyles = "w-30 h-20 bg-black text-white z-30 hover:cursor-pointer" +
     " relative "
 
@@ -76,8 +79,8 @@ export default function IndexButton({ text, link }: { text: string; link: string
             </motion.button>
             {hovered &&
                 <> 
-                { Array.from({length: 16}).map((_, i) => 
-                    <BitAnimation count={i} key={i} position={coord} />
+                { Array.from({length: particleCount}).map((_, i) => 
+                    <BitAnimation count={i} key={i} position={coord} fade={fade} />
                 )}
                 </>
             }
@@ -85,14 +88,15 @@ export default function IndexButton({ text, link }: { text: string; link: string
     )
 }
 
-function BitAnimation ({position, count} : {position: {x:number, y:number}, count:number}) {
+function BitAnimation ({position, count, fade} : {position: {x:number, y:number}, count:number, fade: boolean}) {
     const navBarHeight = 42;
     
     let xKeys = [
         [null, -25], [null, -30], [null, -35], [null, -40], [null, -45],
         [null, -50], [null, -55], [null, -60], [null, -65], [null, -70],
         [null, -75], [null, -80], [null, -85], [null, -90], [null, -95],
-        
+        [null, -100], [null, -105], [null, -110], [null, -115],
+
     ];
 
     let yKeys = [
@@ -102,7 +106,6 @@ function BitAnimation ({position, count} : {position: {x:number, y:number}, coun
         [null, -95], [null, -100], [null, -105], [null, -110], [null, -115],
         
     ];
-
 
     const isLeft = position.x < window.innerWidth / 2;
     const isTop = (position.y - navBarHeight) < window.innerHeight / 2 ;
@@ -116,7 +119,6 @@ function BitAnimation ({position, count} : {position: {x:number, y:number}, coun
     if (!isTop) {
         yKeys = yKeys.map(arr => arr.map(num => num !== null ? num * -1 : null)) as [number | null, number][];
     }
-    
 
     return (
         <motion.article
@@ -138,8 +140,6 @@ function BitAnimation ({position, count} : {position: {x:number, y:number}, coun
                 repeatDelay: Math.random() * 0.1 + count/10,
                 delay: Math.random() * count/10
             }}
-        >
-        
-        </motion.article>
+        />
     )
 }
