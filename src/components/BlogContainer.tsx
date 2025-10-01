@@ -50,10 +50,19 @@ export default function BlogContainer() {
     return(
         <section className="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto">
             {loading &&
+            <>
                 <article className="flex h-full flex-col justify-center items-center gap-2 animate-pulse">
                     <p>Syncing with satellite...</p>
                 </article>
                 
+            </>
+            }
+
+            {error &&
+                <article className="flex h-full flex-col justify-center items-center animate-bounce">
+                    <p>Uplink failed (try again later)</p>
+                    <img className="h-5 w-5" src="/x.svg" />
+                </article>
             }
             { posts && posts.data.length > 0 && 
                    <section className="flex flex-col gap-6">
