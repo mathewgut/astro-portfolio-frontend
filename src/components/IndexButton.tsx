@@ -71,8 +71,7 @@ export default function IndexButton({ text, link }: { text: string; link: string
             animate={hovered ? border : { borderRadius: "8px" }}
 
             transition={{ duration: 3, delay:0.5, ease: "easeInOut" }}
-            whileTap={{ scale: 0.9 }}
-            
+            whileTap={{ scale: 0.8,}}
 
             className={blockButtonStyles}>
                 {text}

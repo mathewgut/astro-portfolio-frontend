@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import truncateText from "../components/utils";
-import {motion} from "motion/react";
+import {motion, useAnimation} from "motion/react";
+
 
 interface Post {
     data: {
@@ -16,8 +17,6 @@ interface Post {
     meta: {}
     
 }
-
-
 
 export default function BlogContainer() {
     const [posts, setPosts] = useState<Post | null>(null);
@@ -68,15 +67,7 @@ export default function BlogContainer() {
                    <section className="flex flex-col gap-6">
                    {
                     posts.data.map((post) => 
-                        <motion.article 
-                            onHoverStart={() => setHovered(true)}
-                            onHoverEnd={() => setHovered(false)}
-                            key={post.id} className="flex flex-col py-4 px-1 text-black border-b border-black hover:cursor-pointer">
-                                <h2 className="text-2xl mb-2">{post.title}</h2>
-                                <p className="text-sm">{truncateText(post.body, 80)}</p>
-                                <Tag category={post.category} />
-                            
-                        </motion.article>
+                        <PostPreview key={post.id} post={post} />
                     )
                     }
                    </section> 
@@ -93,4 +84,113 @@ function Tag({category}:{category:string}) {
     return(
         <span className="text-xs mt-2 px-2 py-1 border w-fit border-black rounded-md">{category}</span>
     )
+}
+
+function PostPreview({post}:{post:any}) {
+    const [hovered, setHovered] = useState(false);
+
+    return(
+        <motion.article 
+            onHoverStart={() => setHovered(true)}
+            onHoverEnd={() => setHovered(false)}
+            whileHover={{ 
+                scale: 1.02,
+                borderBottomWidth: "4px",
+                }}
+            transition={{ 
+                duration: 0.3,
+                type: "tween", 
+                ease: "easeInOut", 
+                repeat: 0,
+            }}
+
+            key={post.id} className="flex flex-col py-4 px-1 text-black border-b border-black hover:cursor-pointer">
+                <div>
+                    <time className="text-xs text-gray-600">{new Date(post.publishedAt).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric"
+                    })}
+                    </time>
+                </div>
+                
+                <DecodedTitle text={post.title} />
+                <motion.p
+                whileInView={{opacity: [0,1,0,0,1,8,0,1]}}
+                viewport={{ once: true }}
+                transition={{ 
+                duration: 1.2,
+                type: "tween", 
+                ease: "easeInOut", 
+                repeat: 0,
+             }} 
+                className="text-sm">
+                    {truncateText(post.body, hovered ? 150 : 80)}
+                </motion.p>
+                <Tag category={post.category} />
+            
+        </motion.article>
+    )
+     
+}
+
+
+
+function DecodedTitle({ text }: { text: string }) {
+    const [displayed, setDisplayed] = useState(""); // stores the currently 'decoded' text
+    const controls = useAnimation();
+    const [hasAnimated, setHasAnimated] = useState(false);
+
+    useEffect(() => {
+        if (!hasAnimated) {
+            controls.start("visible");
+        }
+    }, [controls, hasAnimated]);
+
+    const handleInView = () => {
+        if (hasAnimated) return;
+        let frame = 0;
+        let revealed = "";
+        let raf: number;
+        const chars =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*:;,.?";
+        function decode() {
+            if (frame < text.length) {
+                revealed = text
+                    .split("")
+                    .map((c, i) =>
+                        i < frame
+                            ? c
+                            : chars[Math.floor(Math.random() * chars.length)]
+                    )
+                    .join("");
+                setDisplayed(revealed);
+                frame++;
+                raf = window.setTimeout(decode, 40);
+            } else {
+                setDisplayed(text);
+                setHasAnimated(true);
+            }
+        }
+        decode();
+        return () => clearTimeout(raf);
+    };
+
+    return (
+        <motion.h2
+            className="text-2xl font-semibold mb-2 font-mono"
+            aria-label={text}
+            initial="hidden"
+            animate={controls}
+            variants={{
+                hidden: {},
+                visible: {},
+            }}
+            transition={{ease: "easeInOut"}}
+            viewport={{ once: true, amount: 0.8 }}
+            onViewportEnter={handleInView}
+        >
+            {displayed}
+        </motion.h2>
+    );
 }
