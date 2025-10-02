@@ -1,4 +1,5 @@
-export async function GETPOST(documentID:string) {
+export async function GETPOST() {
+    const documentID = window.location.href.split("/")[-1]
     const apiKey = import.meta.env.STRAPI_READ_KEY;
     const endpoint = "https://api.mgut.ca/api/blog-posts/" + documentID;
 

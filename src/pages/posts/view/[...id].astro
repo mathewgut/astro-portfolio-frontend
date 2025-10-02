@@ -1,16 +1,96 @@
 ---
+import { effect, map } from "astro:schema";
+import { marked } from 'marked';
 import BaseLayout from "../../../layouts/BaseLayout.astro"
-export const prerender = false; // Not needed in 'server' mode
+import "../../../styles/post.css"
+export const prerender = false; 
 const { id } = Astro.params;
 let error:boolean = false;
 
-const data = await fetch("https://api.mgut.ca/blog-post/"+id)
-    .then(res => res.json())
-    .catch(err => {
-        console.error("Error fetching blog post:", err);
+async function GETPOST(documentID:string) {
+    const apiKey = import.meta.env.STRAPI_READ_KEY;
+    const endpoint = "https://api.mgut.ca/api/blog-posts/" + documentID;
+
+    if (!apiKey) {
+        console.error("STRAPI_READ_KEY is not set in .env file");
+        return new Response(
+        JSON.stringify({ message: "Server config error." }),
+        { status: 500 }
+        );
+    }
+
+    if (!documentID) {
+        console.error("Document ID missing from call");
+        return new Response(
+        JSON.stringify({ message: "Server config error." }),
+        { status: 500 }
+        );
+    }
+
+    const bearer = 'Bearer ' + apiKey;
+
+    try {
+        const res = await fetch(endpoint, {
+        headers: {
+            'Authorization': bearer
+        }
+        });
+
+        if (!res.ok) {
+        throw new Error(`Failed to fetch from Strapi: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        
+        return new Response(JSON.stringify(data), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+        });
+
+    } 
+    catch (error) {
+        return new Response(
+        JSON.stringify({ message: "An error occurred while fetching posts." }),
+        { status: 500 }
+        );
+    }
+}
+let response;
+
+if(id){
+    const data = await GETPOST(id);
+    if(data.status != 200 && data){
         error = true;
-        return null;
-    });
+    }
+    else {
+        const json = await data.json();
+        const markdown = json.data?.body || "";
+        response = marked.parse(markdown);
+    }
+}
+else{
+    error = true;
+}
+
 ---
 
-<BaseLayout />
+
+<BaseLayout pageTitle="post">
+    
+    {error &&
+        <section class="flex flex-col justify-center items-center mt-10">
+            <h1 class="font-semibold animate-bounce">Transmission failed</h1>
+            <p class="text-xs animate-pulse">xxxxxxxxxx</p>
+        </section>
+
+    }
+    
+
+    {response &&
+        <section 
+            set:html={response} 
+            class="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto"
+        />
+    }
+
+</BaseLayout>

@@ -6,7 +6,7 @@ import {motion, useAnimation} from "motion/react";
 interface PostArray {
     data: {
         id: number;
-        documentID: number; 
+        documentId: string; 
         title: string;
         category: "Tips"|"News"|"Opinion"|"Project Update"|"Post Mortem"|"Release";
         body: string;
@@ -67,7 +67,9 @@ export default function BlogContainer() {
                    <section className="flex flex-col gap-6">
                    {
                     posts.data.map((post) => 
-                        <PostPreview key={post.id} post={post} />
+                        <a key={post.id} href={"/posts/view/" + post.documentId}>
+                            <PostPreview post={post} />
+                        </a>
                     )
                     }
                    </section> 
