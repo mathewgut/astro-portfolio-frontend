@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro"
+export const prerender = false; // Not needed in 'server' mode
+const { id } = Astro.params;
+let error:boolean = false;
+
+const data = await fetch("https://api.mgut.ca/blog-post/"+id)
+    .then(res => res.json())
+    .catch(err => {
+        console.error("Error fetching blog post:", err);
+        error = true;
+        return null;
+    });
+---
+
+<BaseLayout />

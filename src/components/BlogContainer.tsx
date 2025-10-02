@@ -3,7 +3,7 @@ import truncateText from "../components/utils";
 import {motion, useAnimation} from "motion/react";
 
 
-interface Post {
+interface PostArray {
     data: {
         id: number;
         documentID: number; 
@@ -19,7 +19,7 @@ interface Post {
 }
 
 export default function BlogContainer() {
-    const [posts, setPosts] = useState<Post | null>(null);
+    const [posts, setPosts] = useState<PostArray | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<any>(null);
     const [hovered, setHovered] = useState(false);
@@ -28,11 +28,11 @@ export default function BlogContainer() {
     useEffect(() => {
         const fetchPosts = async () => {
         try {
-            const res = await fetch("/api/posts");
+            const res = await fetch("/api/all-posts");
             if (!res.ok) {
                 throw new Error('Failed to fetch posts');
             }
-            const data: Post = await res.json();
+            const data: PostArray = await res.json();
             setPosts(data);
             console.log(data);
         } 
