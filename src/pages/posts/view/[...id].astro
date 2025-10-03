@@ -3,6 +3,7 @@ import { effect, map } from "astro:schema";
 import { marked } from 'marked';
 import BaseLayout from "../../../layouts/BaseLayout.astro"
 import "../../../styles/post.css"
+import BlogPostAnimation from "../../../components/BlogPostAnimation";
 export const prerender = false; 
 const { id } = Astro.params;
 let error:boolean = false;
@@ -87,10 +88,13 @@ else{
     
 
     {response &&
-        <section 
-            set:html={response} 
-            class="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto"
-        />
+        <BlogPostAnimation client:load>
+            <section 
+                set:html={response} 
+                class="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto"
+            />
+        </BlogPostAnimation>
+        
     }
 
 </BaseLayout>

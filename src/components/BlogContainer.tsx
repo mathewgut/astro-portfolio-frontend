@@ -180,7 +180,7 @@ function DecodedTitle({ text }: { text: string }) {
 
     return (
         <motion.h2
-            className="text-2xl font-semibold mb-2 font-mono"
+            className="text-2xl font-semibold mb-2 font-mono max-w-full break-words"
             aria-label={text}
             initial="hidden"
             animate={controls}
