@@ -1,7 +1,31 @@
 @import "tailwindcss";
 
 h1 {
-    @apply font-bold my-4 text-2xl md:text-4xl
+    @apply font-bold my-4 text-2xl md:text-4xl;
+}
+
+h2 {
+    @apply font-semibold my-3 text-xl md:text-3xl;
+}
+
+h3 {
+    @apply font-medium my-2 text-lg md:text-2xl;
+}
+
+h4, h5 {
+    @apply font-medium my-1 text-base md:text-xl;
+}
+
+p {
+    @apply my-1 text-base;
+}
+
+ul, ol {
+    @apply my-2 pl-6 list-disc marker:font-semibold;
+}
+
+ol {
+    @apply list-decimal ;
 }
 
 img {
@@ -9,7 +33,15 @@ img {
 }
 
 blockquote {
-    @apply border-l-4 border-black pl-4 italic my-4;
+    @apply border-l-4 border-black pl-4 italic my-2;
+}
+
+code {
+    @apply bg-gray-200 my-1 px-1 rounded;
+}
+
+main > p > a {
+    @apply text-blue-700 hover:underline transition ease-in-out duration-200
 }
 
 img::after {
