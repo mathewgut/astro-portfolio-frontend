@@ -15,7 +15,6 @@ interface PostArray {
         publishedAt: Date;
     }[];
     meta: {}
-    
 }
 
 export default function BlogContainer() {
