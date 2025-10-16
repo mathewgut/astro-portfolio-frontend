@@ -24,6 +24,7 @@ export default function WorkContainer(){
     
     const [error, setError] = useState<any>(null);
     const [activeError, setActiveError] = useState<any>(null);
+    const [mediaActive, setMediaActive] = useState<boolean>(false)
     
     const [activeItem, setActiveItem] = useState<ActiveItemType | null>(null);
 
@@ -73,7 +74,11 @@ export default function WorkContainer(){
     
     return(
         <>
-        <MediaView />
+        { !loadingActive && mediaActive && activeItem?.media &&
+            <MediaView media={activeItem.media} 
+            active={mediaActive} setActive={setMediaActive} />
+        }
+        
         
         <main 
         className="flex flex-col mt-10 gap-2 pb-10 w-full h-full font-[Terminal] ">
@@ -128,7 +133,7 @@ export default function WorkContainer(){
                                 <p>{activeItem.description}</p>
                                 <div>
                                     {activeItem.media?.map((item,index) => 
-                                        <p className="text-black">media</p>
+                                        <p onClick={() => setMediaActive(true)} className="text-black">media</p>
                                     )}
                                 </div>
                             </article>
