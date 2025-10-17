@@ -44,6 +44,8 @@ export interface DocumentImage {
         small:StrapiImageFormat
     }
     url:string;
+    hash:string;
+    ext:string;
 } 
 
 export type ActiveItemType = WorkArray["data"][number];

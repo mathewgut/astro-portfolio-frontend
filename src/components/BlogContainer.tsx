@@ -46,7 +46,7 @@ export default function BlogContainer() {
         fetchPosts();
     }, []);
     return(
-        <section className="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto">
+        <section className="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto bg-gradient-to-br">
             {loading &&
             <>
                 <article className="flex h-full flex-col justify-center items-center gap-2 animate-pulse">
@@ -72,10 +72,6 @@ export default function BlogContainer() {
                     )
                     }
                    </section> 
-                
-               
-                
-
             }
         </section>
     )

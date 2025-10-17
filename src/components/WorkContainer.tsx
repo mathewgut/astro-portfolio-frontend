@@ -25,6 +25,7 @@ export default function WorkContainer(){
     const [error, setError] = useState<any>(null);
     const [activeError, setActiveError] = useState<any>(null);
     const [mediaActive, setMediaActive] = useState<boolean>(false)
+    let mediaIndex:number|undefined = undefined;
     
     const [activeItem, setActiveItem] = useState<ActiveItemType | null>(null);
 
@@ -131,10 +132,13 @@ export default function WorkContainer(){
                                     </Badge>
                                 </div>
                                 <p>{activeItem.description}</p>
-                                <div>
-                                    {activeItem.media?.map((item,index) => 
-                                        <p onClick={() => setMediaActive(true)} className="text-black">media</p>
-                                    )}
+                                <div className="flex gap-2">
+                                    { activeItem.media &&
+                                        <p onClick={() => setMediaActive(true)} className="text-black hover:underline hover:cursor-pointer">
+                                            View media    
+                                        </p>
+                                    }
+                                   
                                 </div>
                             </article>
                         }
@@ -157,26 +161,22 @@ function ProjectItem ({item, onClickFn}:{item:WorkArray["data"][number], onClick
         className={`flex flex-col justify-end px-4 py-2 ${selectedColor} border-b-2 hover:border-b-4 h-30 w-full col-span-1 text-black hover:cursor-pointer ease-in-out duration-200 hover:scale-105 hover:pb-4`}>
             <h2 className="text-xl pb-2">{item.title}</h2>
             <div className="flex gap-2 capitalize text-sm text-white">
-                <p className="">
-                    <Badge title={item.type}>
-                        <img src="/folder.svg" alt="Project icon" className="h-5 w-5" style={{ filter: "invert(1)" }} />
-                    </Badge>
-                </p>
-                <p className="">
-                    <Badge title={item.role}>
-                        <img src="/user.svg" alt="Role icon" className="h-5 w-5" style={{ filter: "invert(1)" }} />
-                    </Badge>
-                </p>
+                <Badge title={item.type}>
+                    <img src="/folder.svg" alt="Project icon" className="h-5 w-5" style={{ filter: "invert(1)" }} />
+                </Badge>
                 
+                <Badge title={item.role}>
+                    <img src="/user.svg" alt="Role icon" className="h-5 w-5" style={{ filter: "invert(1)" }} />
+                </Badge>
             </div>
         </div>
     )
 }
 
 
-function Badge({title, children}:{title:string, children:ReactNode}){
+export function Badge({title, children}:{title:string, children:ReactNode}){
     return(
-        <span className="flex gap-1 capitalize text-sm justify-center items-center text-white bg-black py-1 px-2 rounded-lg">
+        <span className="flex gap-1 capitalize text-sm justify-center items-center text-white bg-black py-1 px-2 rounded-lg hover:cursor-default">
             {children}
             <p>{title}</p>
         </span>
