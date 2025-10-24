@@ -1,21 +1,10 @@
 import { useEffect, useState } from "react";
 import truncateText from "../components/utils";
 import {motion, useAnimation} from "motion/react";
+import type { PostArray } from "./ItemTypes";
 
 
-interface PostArray {
-    data: {
-        id: number;
-        documentId: string; 
-        title: string;
-        category: "Tips"|"News"|"Opinion"|"Project Update"|"Post Mortem"|"Release";
-        body: string;
-        createdAt: Date;
-        updatedAt: Date;
-        publishedAt: Date;
-    }[];
-    meta: {}
-}
+
 
 export default function BlogContainer() {
     const [posts, setPosts] = useState<PostArray | null>(null);

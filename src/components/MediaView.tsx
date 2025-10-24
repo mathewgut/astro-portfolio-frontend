@@ -36,16 +36,13 @@ export default function MediaView({media, active, setActive, mediaIndex=0}:{medi
                 
             </button>
             {metaActive && 
-                <section className="flex flex-col text-sm max w-100 justify-center text-left bg-black text-white p-4">
+                <section className="flex flex-col text-sm max w-100 max-w-[80%] justify-center text-left bg-black text-white p-4">
                     <p><span className="font-bold">id: </span> {media[indexNumber].id}</p>
                     <p><span className="font-bold">name: </span> {media[indexNumber].name}</p>
                     <p><span className="font-bold">alt text: </span> {media[indexNumber].alternativeText ?? "null"}</p>
                     <p><span className="font-bold">caption: </span> {media[indexNumber].alternativeText ?? "null"}</p>
                     <p><span className="font-bold">dimensions: </span> {media[indexNumber].width && media[indexNumber].height ? String(media[indexNumber].width + "px x " + media[indexNumber].height + "px" ) : "null"}</p>
-
-
-                    <p><span className="font-bold">backend: </span> Strapi </p>
-
+                    <p><span className="font-bold">served using: </span> Strapi </p>
                 </section>
             }
             
@@ -53,7 +50,7 @@ export default function MediaView({media, active, setActive, mediaIndex=0}:{medi
 
                 <>
                     { imgExtensions.includes(media[indexNumber].ext) &&
-                    <img className="w-[80%] max-h-[80svh] max-w-fit hover:cursor-zoom-in" src={domainEndpoint+media[indexNumber].url} alt={media[indexNumber].alternativeText} />  
+                    <img className="w-[80%] max-h-[80svh] max-w-fit" src={domainEndpoint+media[indexNumber].url} alt={media[indexNumber].alternativeText} />  
                     }
                     
                     { vidExtensions.includes(media[indexNumber].ext) &&

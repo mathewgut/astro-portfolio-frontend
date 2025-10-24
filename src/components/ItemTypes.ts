@@ -3,12 +3,29 @@ export interface WorkArray {
         id: number;
         documentId: string; 
         title: string;
-        type: "fullstack"|"frontend"|"backend"|"api"|"game"|"cli"|"chatbot"|"other";
-        role: "all"|"lead developer"|"developer"|"lead designer"|"designer"|"owner"|"organizer"|"artist";
+        type: "website"|"web application"|"api"|"mobile"|"game"|"cli"|"chatbot"|"other";
+        role: "sole developer"|"sole designer"|"sole animator"|"sole engineer"|"frontend developer"|"backend developer"|"designer";
         description: string;
         is_active: boolean;
         completed: Date;
         media?:DocumentImage[];
+        link?:string;
+        technologies?:string;
+        articles:PostArray["data"];
+        createdAt: Date;
+        updatedAt: Date;
+        publishedAt: Date;
+    }[];
+    meta: {}
+}
+
+export interface PostArray {
+    data: {
+        id: number;
+        documentId: string; 
+        title: string;
+        category: "Tips"|"News"|"Opinion"|"Project Update"|"Post Mortem"|"Release";
+        body: string;
         createdAt: Date;
         updatedAt: Date;
         publishedAt: Date;
