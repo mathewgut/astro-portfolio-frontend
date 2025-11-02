@@ -72,22 +72,19 @@ if(id){
 else{
     error = true;
 }
-
 ---
 
 
 <BaseLayout pageTitle="post">
     
-    {error &&
+    { error &&
         <section class="flex flex-col justify-center items-center mt-10">
             <h1 class="font-semibold animate-bounce">Transmission failed</h1>
             <p class="text-xs animate-pulse">xxxxxxxxxx</p>
         </section>
-
     }
-    
 
-    {response &&
+    { response &&
         <BlogPostAnimation client:only>
             <main
                 set:html={response} 

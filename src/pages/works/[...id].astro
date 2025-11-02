@@ -1,0 +1,185 @@
+---
+import type { WorkItem } from "../../components/ItemTypes";
+import MediaView from "../../components/MediaView";
+import { Badge } from "../../components/WorkContainer";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const { id } = Astro.params;
+let error:boolean = false;
+let loading:boolean = true;
+
+let message;
+export const prerender = false;
+
+const fetchWorkItem = async (documentID:string) => {
+    loading = true;
+    try {
+        const res = await fetch("http://localhost:4321/api/work-item/" + id);
+        if (!res.ok) {
+            throw new Error(`Failed to fetch work item: ${res.statusText}`);
+        }
+        const data = await res.json();
+        loading = false;
+        return data;
+    } catch (err) {
+        console.error(err);
+        error = true;
+        message = err;
+        loading = false;
+    }
+};
+
+let workItem:WorkItem | undefined = undefined;
+if(id) {
+    workItem = await fetchWorkItem(id);
+}
+const treadMillClass = "animate-spin";
+let imageViewActive = false;
+---
+
+<BaseLayout pageTitle="Work">
+    { error &&
+        <section class="flex flex-col justify-center items-center mt-10">
+            <h1 class={"text-sm"}>Transmission failed</h1>
+            <p class="text-xs animate-pulse">{message}</p>
+        </section>
+    }
+
+    { loading &&
+        <section class="flex flex-col justify-center items-center mt-10">
+            <div class="flex gap-2">
+                <div data-color />
+            </div>
+            <div class="flex text-sm">
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+                <span class={treadMillClass}>x</span>
+            </div>
+        </section>
+    }
+    {
+        workItem && !loading && !error && 
+        <div class="z-30 absolute top-0 w-full">
+            { workItem.data.media && workItem.data.media.length > 0 &&
+                    <MediaView client:load media={workItem.data.media} active={false} setActive={() => {imageViewActive = !imageViewActive}} />
+            }
+        </div>
+        <main class="flex flex-col w-full min-h-svh mt-10 px-10 md:max-w-2/3">
+            
+            <section class="flex gap-4 mb-4">
+                    <a href="/work" class="text-xs hover:underline">
+                        &lt; BACK TO WORK
+                    </a>
+                </section>
+            <header class="flex flex-col">
+                <div class="flex items-center gap-2">
+                    <h1 class="text-lg font-semibold">
+                        {workItem.data.title}
+                    </h1>
+             
+                    {workItem.data.is_active ? <div title={workItem.data.is_active ? "Active" : "Not active"} class="w-2 h-2 bg-green-700 rounded-full animate-pulse "/> : <div title={workItem.data.is_active ? "Active" : "Not active"} class="w-2 h-2 bg-red-700 rounded-full animate-pulse"/>}
+
+                </div>
+                
+                <section class="flex flex-wrap items-center text-xs gap-2 mt-2">
+                   <Badge client:only title={workItem.data.type}>
+                        <img src="/folder.svg" alt="Project icon" class="h-4 w-4" />
+                    </Badge>
+                    
+                    <Badge client:only title={workItem.data.role}>
+                        <img src="/user.svg" alt="Role icon" class="h-4 w-4" />
+                    </Badge>
+
+                </section>
+
+                { workItem.data.link &&
+                    <span class="flex items-center gap-2 mt-2">
+                        <img class="h-4.5 w-4.5" src="/link.svg" alt="link icon" />
+                        <a class="hover:cursor-pointer hover:underline text-xs" href={workItem.data.link}>
+                            {workItem.data.link}
+                        </a>
+                    </span>
+                }
+                
+            </header>
+
+            <section class="mt-4 flex gap-4 flex-wrap w-full">
+                <article class="p-4 w-fit md:w-2/5 border-2 border-black">
+                    <h2 class="text-sm">
+                        // METADATA
+                    </h2>
+                    <ul class="list-inside text-xs mt-2 pl-4">
+                        <li>Entry created: {new Date(workItem.data.createdAt).toLocaleDateString()}</li>
+                        <li>Entry updated: {new Date(workItem.data.updatedAt).toLocaleDateString()}</li>
+                        <li>Completed?: {workItem.data.completed ?? "No"}</li>
+                        <li>Has media?: {workItem.data.media ? "Yes" : "No"}</li>
+
+                    </ul>
+                </article>
+                <article class="p-4 w-fit md:w-2/5 border-2 border-black">
+                    <h2 class="mb-2 text-sm">// TECHNOLOGIES</h2>
+                    <ul class="list-disc list-inside text-xs pl-4">
+                        { workItem.data.technologies &&
+                            workItem.data.technologies.split(",").map((tech:string) => (
+                                <li>{tech.trim()}</li>
+                            ))
+                        }
+                    </ul>
+                </article>
+            </section>
+
+          
+
+            <article class="mt-4 text-sm border-2 border-black p-4">
+                <h2 class="mb-2">// BRIEFING</h2>
+                <p class="text-xs pl-4">
+                    {workItem.data.description}
+                </p>
+            </article>
+
+            <article>
+                {workItem.data.articles.length > 0 &&
+                    <section class="mt-4 p-4 border-2 border-black">
+                        <h2 class="mb-2 text-sm">// RELATED ARTICLES</h2>
+                        <ul class="list-inside text-xs pl-4">
+                            { workItem.data.articles.map((article) => (
+                                <li>
+                                    <a href={"/posts/view/" + article.documentId} class="hover:underline hover:cursor-pointer">
+                                        {article.title}
+                                    </a>
+                                </li>
+                            )) }
+                        </ul>
+                    </section>
+                }
+            </article>
+
+            
+                {workItem.data.media && workItem.data.media.length > 0 &&
+                    <button class="text-sm py-4 px-6 w-full border-2 mt-4 hover:cursor-pointer">
+                        [ VIEW MEDIA ]
+                    </button>
+                }
+            
+        </main>
+    }
+</BaseLayout>
+
+<script>
+    const colorOptions = ["blue-900", "green-900", "slate-900", "red-900", "indigo-900", "rose-900", "teal-900", "violet-900"];
+    const dataColor = document.querySelector('[data-color]');
+
+    function updateColor() {
+        const newColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+        dataColor ? dataColor.className = ` bg-${newColor} px-2 py-2 text-white animate-spin w-10 h-10 z-30` : null;
+    }
+
+    setInterval(updateColor, 450);
+</script>
