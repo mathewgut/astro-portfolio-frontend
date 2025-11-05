@@ -66,11 +66,6 @@ let imageViewActive = false;
     }
     {
         workItem && !loading && !error && 
-        <div class="z-30 absolute top-0 w-full">
-            { workItem.data.media && workItem.data.media.length > 0 &&
-                    <MediaView client:load media={workItem.data.media} active={false} setActive={() => {imageViewActive = !imageViewActive}} />
-            }
-        </div>
         <main class="flex flex-col w-full min-h-svh mt-10 px-10 md:max-w-2/3">
             
             <section class="flex gap-4 mb-4">
@@ -110,8 +105,8 @@ let imageViewActive = false;
                 
             </header>
 
-            <section class="mt-4 flex gap-4 flex-wrap w-full">
-                <article class="p-4 w-fit md:w-2/5 border-2 border-black">
+            <section class="mt-4 flex gap-4 w-full flex-wrap md:flex-nowrap">
+                <article class="p-4 min-w-fit w-full border-2 border-black">
                     <h2 class="text-sm">
                         // METADATA
                     </h2>
@@ -120,10 +115,9 @@ let imageViewActive = false;
                         <li>Entry updated: {new Date(workItem.data.updatedAt).toLocaleDateString()}</li>
                         <li>Completed?: {workItem.data.completed ?? "No"}</li>
                         <li>Has media?: {workItem.data.media ? "Yes" : "No"}</li>
-
                     </ul>
                 </article>
-                <article class="p-4 w-fit md:w-2/5 border-2 border-black">
+                <article class="p-4 min-w-fit w-full border-2 border-black">
                     <h2 class="mb-2 text-sm">// TECHNOLOGIES</h2>
                     <ul class="list-disc list-inside text-xs pl-4">
                         { workItem.data.technologies &&
@@ -138,7 +132,7 @@ let imageViewActive = false;
           
 
             <article class="mt-4 text-sm border-2 border-black p-4">
-                <h2 class="mb-2">// BRIEFING</h2>
+                <h2 class="mb-2">// BRIEF</h2>
                 <p class="text-xs pl-4">
                     {workItem.data.description}
                 </p>
@@ -163,9 +157,8 @@ let imageViewActive = false;
 
             
                 {workItem.data.media && workItem.data.media.length > 0 &&
-                    <button class="text-sm py-4 px-6 w-full border-2 mt-4 hover:cursor-pointer">
-                        [ VIEW MEDIA ]
-                    </button>
+     
+                    <MediaView client:load media={workItem.data.media} />
                 }
             
         </main>
@@ -173,6 +166,7 @@ let imageViewActive = false;
 </BaseLayout>
 
 <script>
+    const haha = "hi";
     const colorOptions = ["blue-900", "green-900", "slate-900", "red-900", "indigo-900", "rose-900", "teal-900", "violet-900"];
     const dataColor = document.querySelector('[data-color]');
 
@@ -181,5 +175,5 @@ let imageViewActive = false;
         dataColor ? dataColor.className = ` bg-${newColor} px-2 py-2 text-white animate-spin w-10 h-10 z-30` : null;
     }
 
-    setInterval(updateColor, 450);
+    setInterval(updateColor, 450);  
 </script>

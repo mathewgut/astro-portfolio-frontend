@@ -3,72 +3,79 @@ import type { DocumentImage } from "./ItemTypes";
 import { domainEndpoint } from "./utils";
 
 // for strapi media
-export default function MediaView({media, active, setActive, mediaIndex=0}:{media:DocumentImage[], active:boolean, setActive:Dispatch<SetStateAction<boolean>>, mediaIndex?:number}){
-    const [indexNumber, setIndexNumber] = useState<number>(mediaIndex);
+export default function MediaView({media}:{media:DocumentImage[]}) {
+    const [indexNumber, setIndexNumber] = useState<number>(0);
     const [metaActive, setMetaActive] = useState<boolean>(false);
 
-    const imgExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg", ".tiff", ".ico", ".avif"];
+    const imgExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg", ".tiff", ".ico", ".avif"]
     const vidExtensions = [".mp4", ".webm", ".ogg", ".mov", ".avi", ".wmv", ".flv", ".mkv", ".m4v", ".3gp"];
+    
+    function changeMediaIndex(posAdd:number) {
+        const newIndex = indexNumber + posAdd;
+        
+        if (newIndex < 0) {
+            setIndexNumber(media.length - 1);
+        } else if (newIndex >= media.length) {
+            setIndexNumber(0);
+        } else {
+            setIndexNumber(newIndex);
+        }
+    }
+    
     return(
-        <main className="fixed flex flex-col top-0 gap-5 z-50 justify-center items-center h-svh w-svw backdrop-blur-md bg-black/30">
-        <img onClick={() => setActive(false)} className="absolute top-7.5 right-7.5 h-7 w-7 hover:cursor-pointer" src="/x.svg" alt="close media button"/>
-            
-            <button type="button" 
-            onClick={() => setMetaActive(!metaActive)}
-            className="flex bg-black px-2 py-1 gap-2 rounded-md text-white text-sm justify-center items-center hover:cursor-pointer">
-            
-                { metaActive &&
-                    <>
-                        <img src="/image.svg" alt="media icon"
-                        className="h-4 w-4" style={{ filter: "invert(1)" }}
-                        />
-                        <p>Return to media</p>
-                    </>
-                }
-                {!metaActive &&
-                    <>
-                        <img src="/info.svg" alt="information icon"
-                        className="h-4 w-4" style={{ filter: "invert(1)" }}
-                        />
-                        <p>Data for nerds</p>
-                    </>
-                }
-                
-            </button>
-            {metaActive && 
-                <section className="flex flex-col text-sm max w-100 max-w-[80%] justify-center text-left bg-black text-white p-4">
-                    <p><span className="font-bold">id: </span> {media[indexNumber].id}</p>
-                    <p><span className="font-bold">name: </span> {media[indexNumber].name}</p>
-                    <p><span className="font-bold">alt text: </span> {media[indexNumber].alternativeText ?? "null"}</p>
-                    <p><span className="font-bold">caption: </span> {media[indexNumber].alternativeText ?? "null"}</p>
-                    <p><span className="font-bold">dimensions: </span> {media[indexNumber].width && media[indexNumber].height ? String(media[indexNumber].width + "px x " + media[indexNumber].height + "px" ) : "null"}</p>
-                    <p><span className="font-bold">served using: </span> Strapi </p>
-                </section>
-            }
-            
-            { !metaActive &&
+        <main className="relative flex flex-col justify-center items-center w-full h-full my-4">
 
-                <>
+                <div className="flex relative w-full justify-center max-h-100 border-2">
+                    <button type="button" 
+                    onClick={() => setMetaActive(!metaActive)}
+                    className="flex absolute z-30 top-1 right-1 backdrop-blur-sm bg-black/30 px-2 py-1 gap-2 rounded-md text-white text-sm justify-center items-center hover:cursor-pointer">  
+                        <img src="/info.svg" alt="information icon"
+                        className="h-5 w-5" style={{ filter: "invert(1)" }}
+                        /> 
+                    </button>
+
+                    <button onClick={() => changeMediaIndex(-1)} className="absolute flex justify-center items-center w-15 h-1/2 top-2/8 left-0 bg-black/10 hover:bg-black/20 hover:text-white hover:cursor-pointer">
+                            &lt;
+                    </button>
+                    <button onClick={() => changeMediaIndex(1)} className="absolute flex justify-center items-center w-15 h-1/2 top-2/8 right-0 bg-black/10 hover:bg-black/20 hover:text-white hover:cursor-pointer">
+                        &gt;
+                    </button>
+
+                    {metaActive && 
+                        <section className="absolute text-xs flex flex-col sm:text-sm w-full h-full justify-center text-center bg-black/50 backdrop-blur-sm text-white p-4">
+                            <p><span className="font-bold">id: </span> {media[indexNumber].id}</p>
+                            <p><span className="font-bold">name: </span> {media[indexNumber].name}</p>
+                            <p><span className="font-bold">alt text: </span> {media[indexNumber].alternativeText ?? "null"}</p>
+                            <p><span className="font-bold">caption: </span> {media[indexNumber].alternativeText ?? "null"}</p>
+                            <p><span className="font-bold">dimensions: </span> {media[indexNumber].width && media[indexNumber].height ? String(media[indexNumber].width + "px x " + media[indexNumber].height + "px" ) : "null"}</p>
+                            <p><span className="font-bold">served using: </span> Strapi </p>
+                        </section>
+                    }
+
                     { imgExtensions.includes(media[indexNumber].ext) &&
-                    <img className="w-[80%] max-h-[80svh] max-w-fit" src={domainEndpoint+media[indexNumber].url} alt={media[indexNumber].alternativeText} />  
+                        <img className="max-h-100 max-w-full" src={domainEndpoint+media[indexNumber].url} alt={media[indexNumber].alternativeText} />  
                     }
                     
                     { vidExtensions.includes(media[indexNumber].ext) &&
-                    <video
-                        className="w-[80%] max-h-[80svh] max-w-fit bg-black"
-                        src={domainEndpoint+media[indexNumber].url}
-                        controls
-                        controlsList="nodownload"
-                        autoPlay
-                        muted
-                    >
-                        Your browser does not support the video tag.
-                    </video>
+                        <video
+                            className="w-full max-h-full max-w-fit bg-black"
+                            src={domainEndpoint+media[indexNumber].url}
+                            controls
+                            controlsList="nodownload"
+                            autoPlay
+                            muted
+                        >
+                            Your browser does not support the video tag.
+                        </video>
                     }
-                </>
-            }
+                   
+                        
+                        
+                    
 
-            <span className="flex justify-center items-center gap-2">
+                </div>
+
+            <span className="flex justify-center items-center gap-2 my-2">
             { 
                 media.map((_,index) =>
                     <> 
