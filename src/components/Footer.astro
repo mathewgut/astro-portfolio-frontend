@@ -1,0 +1,15 @@
+---
+const buttonClasses = "uppercase font-semibold hover:underline hover:cursor-pointer"
+---
+
+<footer class="flex flex-col w-full justify-center items-center pb-2">
+    <div class="w-35 h-0.5 rounded-xl bg-black mb-2" />
+    <p class=" font-[jetbrains-mono] text-xs">Mathew Gutoskie <span year-date></span></p>
+</footer>
+
+<script>
+    document.querySelectorAll('[year-date]').forEach((el) => {
+        const currentYear = new Date().getFullYear();
+        el.textContent = `© ${currentYear}`;
+    });
+</script>

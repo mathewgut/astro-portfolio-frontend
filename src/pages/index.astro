@@ -1,5 +1,6 @@
 ---
 import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
 import IndexButton from "../components/IndexButton.tsx";
 import "../styles/global.css";
 
@@ -15,7 +16,7 @@ const pageTitle = "Mathew Gutoskie"
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
 	</head>
-	<body class="flex justify-center h-svh w-svw font-[vcr]">
+	<body class="flex flex-col justify-center h-svh w-svw font-[vcr]">
 		<Navigation />
 		<main class="flex flex-col px-4 items-center justify-center h-full w-full ">
 				<h1 class="pb-8">mgut</h1>
@@ -32,5 +33,6 @@ const pageTitle = "Mathew Gutoskie"
 				</a>
 			</section>
 		</main>
+		<Footer />
 	</body>
 </html>
