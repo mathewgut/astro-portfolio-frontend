@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+---
+<BaseLayout pageTitle="About">
+    <main class="flex flex-col pt-10 w-full md:max-w-2/3 px-10 lg:px-20 ">
+       <header class="w-full">
+            <h1 class="px-4 py-2 mb-10 bg-black text-white text-3xl font-semibold w-fit">
+                // ABOUT
+            </h1>
+        </header>
+
+        <section class="w-full">
+            <!--
+            <img class="rounded-full h-40" src="/me.jpg"/>
+             -->
+            <h2 class="text-lg mb-4">Hi, I'm Mathew</h2>
+            <main class="flex flex-col gap-4 text-sm font-[jetbrains-mono]">
+                <p>
+                    I am a Junior Web Developer working on <i>what I believe to be</i> fun, purposeful, and useful projects.
+                </p>
+                <p>
+                    Currently, I am in third year standing at Carleton University pursuing a Bachelor's of Information Technology in the 
+                    <a class="underline" rel="noreferrer" href="https://admissions.carleton.ca/programs/interactive-multimedia-and-design-imd/">Interactive Multimedia and Design</a> program.
+                </p>
+                <p>
+                    I am passionate about tech as a whole <i>blame Cleo Abram</i>, and I love learning about new advancements in the field. Specifcially, XR, as I believe that is the future of personal tech. However, that's a tangent for a poorly worded blog post.
+                </p>
+            </main>
+
+        </section>
+
+         <section class="w-full">
+            <!--
+            <img class="rounded-full h-40" src="/me.jpg"/>
+             -->
+            <h3 class="text-base my-4">Some other interests</h3>
+            <main class="flex flex-col gap-4 text-sm font-[jetbrains-mono]">
+                <ul class="list-outside flex flex-col gap-4 list-disc pl-4">
+                    <li class="pl-2">
+                        I'm an avid media consumer. Which is a large part of the reason I made <a class="underline" href="https://mediaharbor.app">MediaHabor</a>. See my profile <a class="underline" rel="noreferrer" href="https://mediaharbor.app/profile/mat">here</a>
+                        to get an idea of my kind of media.
+                    </li>
+                    <li class="pl-2">
+                        As with most developers, I play a lot of games. Currently, I am obsessed with Battlefield 6, Arc Raiders, and Dispatch.
+                    </li>
+                </ul>
+            </main>
+        </section>
+    </main>
+
+</BaseLayout>
