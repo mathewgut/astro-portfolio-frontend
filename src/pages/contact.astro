@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout pageTitle="Contact">
+    <main class="flex flex-col pt-10 w-full md:max-w-2/3 px-2 sm:px-10 lg:px-20 ">
+         <header class="w-full">
+            <h1 class="px-4 py-2 mb-10 bg-black text-white text-3xl font-semibold w-fit">
+                // Contact
+            </h1>
+        </header>
+        <section class="w-full">
+            <main class="flex flex-col gap-4 text-sm font-[jetbrains-mono]">
+                <h2 class="text-lg font-[vcr]">Get in touch</h2>
+                <p>
+                    Feel free to reach out to me via email at 
+                    <a class="underline" href="mailto:mathewgutoskie@gmail.com">mathewgutoskie@gmail.com</a>
+                </p>
+                <section class="flex gap-4 mt-2">
+                    <a class="hover:cursor-pointer" href="https://www.linkedin.com/in/mathewgutoskie/">
+                        <img class="w-7 h-7" src="/linkedin-logo.png" alt="linkedin logo" />
+                    </a>
+                    <a class="hover:cursor-pointer" href="https://github.com/mathewgut">
+                        <img class="w-7 h-7" src="/github-logo.png" alt="github logo" />
+                    </a>
+               </section>
+        </section>
+    </main>
+
+</BaseLayout>
