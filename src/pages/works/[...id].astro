@@ -15,7 +15,7 @@ export const prerender = false;
 const fetchWorkItem = async (documentID:string) => {
     loading = true;
     try {
-        const res = await fetch("http://api/work-item/" + id);
+        const res = await fetch(`http:/${siteURL}/api/work-item/${id}`);
         if (!res.ok) {
             throw new Error(`Failed to fetch work item: ${res.statusText}`);
         }
