@@ -6,13 +6,4 @@
     "disable_nodejs_process_v2"
   ],
   "pages_build_output_dir": "./dist"
-,
-
-"kv_namespaces": [
-    {
-      "binding": "SESSION",
-      "id": "SxRDmjc0Dr7SKV8KSUW2CmC2gWAP7qZXInQiXPs0"
-    }
-  ]
 }
-
