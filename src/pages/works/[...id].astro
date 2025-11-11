@@ -7,13 +7,15 @@ const { id } = Astro.params;
 let error:boolean = false;
 let loading:boolean = true;
 
+let siteURL = import.meta.env.SITE_URL;
+
 let message;
 export const prerender = false;
 
 const fetchWorkItem = async (documentID:string) => {
     loading = true;
     try {
-        const res = await fetch("http://localhost:4321/api/work-item/" + id);
+        const res = await fetch("http://api/work-item/" + id);
         if (!res.ok) {
             throw new Error(`Failed to fetch work item: ${res.statusText}`);
         }
@@ -41,27 +43,6 @@ let imageViewActive = false;
         <section class="flex flex-col justify-center items-center mt-10">
             <h1 class={"text-sm"}>Transmission failed</h1>
             <p class="text-xs animate-pulse">{message}</p>
-        </section>
-    }
-
-    { loading &&
-        <section class="flex flex-col justify-center items-center mt-10">
-            <div class="flex gap-2">
-                <div data-color />
-            </div>
-            <div class="flex text-sm">
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-                <span class={treadMillClass}>x</span>
-            </div>
         </section>
     }
     {
