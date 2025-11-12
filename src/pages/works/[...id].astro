@@ -3,19 +3,72 @@ import type { WorkItem } from "../../components/ItemTypes";
 import MediaView from "../../components/MediaView";
 import { Badge } from "../../components/WorkContainer";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// required for server-side data fetching
+export const prerender = false;
+
 const { id } = Astro.params;
 let error:boolean = false;
 let loading:boolean = true;
-
 let siteURL = import.meta.env.SITE_URL;
-
 let message;
-export const prerender = false;
+
+
+const GetWorkItem = async (id:string) => {
+    const apiKey = import.meta.env.STRAPI_READ_KEY;
+    const endpoint = `https://api.mgut.ca/api/works/${id}?populate=*`;
+
+    if (!apiKey) {
+        console.error("STRAPI_READ_KEY is not set in .env file");
+        return new Response(
+            JSON.stringify({ message: "Server config error." }),
+            { status: 500 }
+        );
+    }
+
+    if (!id) {
+        console.error("Document ID missing from call");
+        return new Response(
+            JSON.stringify({ message: "Server config error." }),
+            { status: 500 }
+        );
+    }
+
+    const bearer = 'Bearer ' + apiKey;
+
+    try {
+        const res = await fetch(endpoint, {
+            headers: {
+                'Authorization': bearer
+            }
+        });
+
+        if (!res.ok) {
+        throw new Error(`Failed to fetch from Strapi: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        
+        return new Response(JSON.stringify(data), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+        });
+
+    } 
+    catch (error) {
+        return new Response(
+        JSON.stringify({ message: "An error occurred while fetching work id: "+id }),
+        { status: 500 }
+        );
+    }
+}
+
+
 
 const fetchWorkItem = async (documentID:string) => {
     loading = true;
     try {
-        const res = await fetch(`http:/${siteURL}/api/work-item/${id}`);
+        const res = await GetWorkItem(documentID);
         if (!res.ok) {
             throw new Error(`Failed to fetch work item: ${res.statusText}`);
         }
@@ -31,11 +84,12 @@ const fetchWorkItem = async (documentID:string) => {
 };
 
 let workItem:WorkItem | undefined = undefined;
+
 if(id) {
     workItem = await fetchWorkItem(id);
 }
-const treadMillClass = "animate-spin";
-let imageViewActive = false;
+
+
 ---
 
 <BaseLayout pageTitle="Work">
