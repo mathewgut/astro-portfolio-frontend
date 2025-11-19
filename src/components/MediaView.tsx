@@ -53,13 +53,13 @@ export default function MediaView({media}:{media:DocumentImage[]}) {
                     }
 
                     { imgExtensions.includes(media[indexNumber].ext) &&
-                        <img className="max-h-100 max-w-full" src={domainEndpoint+media[indexNumber].url} alt={media[indexNumber].alternativeText} />  
+                        <img className="max-h-100 max-w-full" src={media[indexNumber].url} alt={media[indexNumber].alternativeText} />  
                     }
                     
                     { vidExtensions.includes(media[indexNumber].ext) &&
                         <video
                             className="w-full max-h-full max-w-fit bg-black"
-                            src={domainEndpoint+media[indexNumber].url}
+                            src={media[indexNumber].url}
                             controls
                             controlsList="nodownload"
                             autoPlay

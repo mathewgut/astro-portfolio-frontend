@@ -1,9 +1,8 @@
 import type { APIRoute } from "astro";
 export const prerender = false;
 
-export const GET: APIRoute = async ({params, request}) => {
+const GetWorkItem = async (id:string) => {
     const apiKey = import.meta.env.STRAPI_READ_KEY;
-    const {id} = params;
     const endpoint = `https://api.mgut.ca/api/works/${id}?populate=*`;
 
     if (!apiKey) {
