@@ -66,9 +66,9 @@ export default function BlogContainer() {
     )
 }
 
-function Tag({category}:{category:string}) {
+export function Tag({category}:{category:string}) {
     return(
-        <span className="text-xs mt-2 px-2 py-1 border w-fit border-black rounded-md">{category}</span>
+        <span className="flex items-center justify-center text-xs mt-2 px-2 py-1 border w-fit border-black rounded-md">{category}</span>
     )
 }
 

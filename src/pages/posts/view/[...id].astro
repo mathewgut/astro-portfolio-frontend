@@ -1,9 +1,10 @@
 ---
-import { effect, map } from "astro:schema";
 import { marked } from 'marked';
 import BaseLayout from "../../../layouts/BaseLayout.astro"
 import "../../../styles/post.css"
 import BlogPostAnimation from "../../../components/BlogPostAnimation";
+import { Badge } from '../../../components/WorkContainer';
+import { Tag } from '../../../components/BlogContainer';
 export const prerender = false; 
 const { id } = Astro.params;
 let error:boolean = false;
@@ -57,6 +58,7 @@ async function GETPOST(documentID:string) {
     }
 }
 let response;
+let postData;
 
 if(id){
     const data = await GETPOST(id);
@@ -67,6 +69,7 @@ if(id){
         const json = await data.json();
         const markdown = json.data?.body || "";
         response = marked.parse(markdown);
+        postData = json.data;
     }
 }
 else{
@@ -88,8 +91,20 @@ else{
         <BlogPostAnimation client:only>
             <main
                 set:html={response} 
-                class="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto"
-            />
+                class="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto z-30"
+            >
+                {postData &&
+                    <section class="flex flex-col mb-6">
+                        <h1 class="text-3xl font-bold">{postData.title}</h1>
+                        <section class="flex mt-2 gap-2">
+                            <Tag category={postData.category} />
+                            <Tag category={"Posted: " + new Date(postData.createdAt).toLocaleDateString()} />
+                            <Tag category={"Updated: " + new Date(postData.updatedAt).toLocaleDateString()} />
+                        </section>
+                        <div class="mt-6 h-0.25 w-full bg-black" />
+                    </section>
+                }
+            </main>
         </BlogPostAnimation>
         
     }

@@ -178,8 +178,8 @@ if(id) {
                         <ul class="list-inside text-xs pl-4">
                             { workItem.data.articles.map((article) => (
                                 <li>
-                                    <a href={"/posts/view/" + article.documentId} class="hover:underline hover:cursor-pointer">
-                                        {article.title}
+                                    <a href={"/posts/view/" + article.documentId} class="flex items-center hover:underline hover:cursor-pointer">
+                                        {article.title}<span class="flex text-lg pb-3">🗗</span>
                                     </a>
                                 </li>
                             )) }
@@ -188,9 +188,7 @@ if(id) {
                 }
             </article>
 
-            
                 {workItem.data.media && workItem.data.media.length > 0 &&
-     
                     <MediaView client:load media={workItem.data.media} />
                 }
             
