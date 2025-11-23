@@ -15,10 +15,11 @@ const {pageTitle} = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
 	</head>
-	<body class="flex flex-col gap-2 items-center h-svh w-full font-[vcr] ">
+	<body class="flex items-center h-svh w-full font-[vcr] ">
 		<Navigation />
 		<main class="flex flex-col px-4 py-10 justify-center h-full w-full overflow-x-hidden">
 			<slot />
+
 		</main>
 		<Footer />
 	</body>
