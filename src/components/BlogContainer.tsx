@@ -4,14 +4,10 @@ import {motion, useAnimation} from "motion/react";
 import type { PostArray } from "./ItemTypes";
 
 
-
-
 export default function BlogContainer() {
     const [posts, setPosts] = useState<PostArray | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<any>(null);
-    const [hovered, setHovered] = useState(false);
-
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -88,11 +84,11 @@ function PostPreview({post}:{post:any}) {
             onHoverStart={() => setHovered(true)}
             onHoverEnd={() => setHovered(false)}
             whileHover={{ 
-                scale: 1.02,
+                scale: 1.05,
                 borderBottomWidth: "4px",
                 }}
             transition={{ 
-                duration: 0.3,
+                duration: 0.2,
                 type: "tween", 
                 ease: "easeInOut", 
                 repeat: 0,
@@ -117,9 +113,9 @@ function PostPreview({post}:{post:any}) {
                 type: "tween", 
                 ease: "easeInOut", 
                 repeat: 0,
-             }} 
-                className="text-sm">
-                    {truncateText(post.body, hovered ? 150 : 80)}
+                }} 
+                className="text-sm font-[jetbrains-mono] text-neutral-800">
+                    {truncateText(post.description, hovered ? 150 : 80)}
                 </motion.p>
                 <Tag category={post.category} />
             
@@ -172,7 +168,7 @@ function DecodedTitle({ text }: { text: string }) {
 
     return (
         <motion.h2
-            className="text-2xl font-semibold mb-2 font-mono max-w-full break-words"
+            className="text-xl font-semibold mb-2 font-[vcr] max-w-full break-words"
             aria-label={text}
             initial="hidden"
             animate={controls}

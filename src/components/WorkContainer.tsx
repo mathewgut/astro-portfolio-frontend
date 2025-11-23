@@ -129,7 +129,7 @@ function ProjectItem ({item, onClickFn}:{item:WorkArray["data"][number], onClick
                [ {item.title} ]
 
             </h2>
-            <p className="text-xs text-neutral-700">
+            <p className="text-sm font-[jetbrains-mono] text-neutral-800">
                 {truncateText(item.description, 125) }
             </p>
 
