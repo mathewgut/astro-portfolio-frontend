@@ -57,6 +57,7 @@ async function GETPOST(documentID:string) {
         );
     }
 }
+
 let response;
 let postData;
 
@@ -91,7 +92,7 @@ else{
         <BlogPostAnimation client:only>
             <main
                 set:html={response} 
-                class="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto z-30"
+                class="flex flex-col h-full font-[terminal] lg:px-12 md:px-10 sm:px-6 px-4 py-8 max-w-4xl mx-auto z-30 mb-40"
             >
                 {postData &&
                     <section class="flex flex-col mb-6">

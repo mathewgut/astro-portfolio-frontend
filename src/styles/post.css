@@ -17,7 +17,7 @@ h4, h5 {
 }
 
 p {
-    @apply font-[jetbrains-mono] my-1 text-base;
+    @apply font-[jetbrains-mono] text-base mb-4;
 }
 
 ul, ol {
@@ -29,7 +29,7 @@ ol {
 }
 
 img {
-    @apply w-full h-50 object-cover border-4 border-black my-4 rounded-t-4xl;
+    @apply w-full h-50 object-cover border-4 border-black my-4;
 }
 
 blockquote {
@@ -42,8 +42,4 @@ code {
 
 main > p > a {
     @apply text-blue-700 hover:underline transition ease-in-out duration-200
-}
-
-img::after {
-    content: "//////////////////////////";
-}
+};
