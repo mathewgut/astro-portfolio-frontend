@@ -17,8 +17,20 @@ export default function BlogContainer() {
                 throw new Error('Failed to fetch posts');
             }
             const data: PostArray = await res.json();
+
+            // sort by date published descending
+            data.data.sort((a, b) => {
+                return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+            });
+
+            // pinned posts first
+            data.data.sort((a, b) => {
+                return Number(b.is_pinned) - Number(a.is_pinned);
+            });
+            
+            console.log(data)
+
             setPosts(data);
-            console.log(data);
         } 
         catch (err) {
             setError(err); 
@@ -117,14 +129,17 @@ function PostPreview({post}:{post:any}) {
                 className="text-sm font-[jetbrains-mono] text-neutral-800">
                     {truncateText(post.description, hovered ? 150 : 80)}
                 </motion.p>
-                <Tag category={post.category} />
+                <div className="flex gap-2">
+                    { post.is_pinned && <Tag category="Pinned" /> }
+                    <Tag category={post.category} />
+                </div>
+
+
             
         </motion.article>
     )
      
 }
-
-
 
 function DecodedTitle({ text }: { text: string }) {
     const [displayed, setDisplayed] = useState(""); // stores the currently 'decoded' text

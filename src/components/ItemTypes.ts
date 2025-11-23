@@ -43,6 +43,7 @@ export interface WorkItem {
 export interface PostArray {
     data: {
         id: number;
+        description: string;
         documentId: string; 
         title: string;
         category: "Tips"|"News"|"Opinion"|"Project Update"|"Post Mortem"|"Release";
@@ -50,6 +51,7 @@ export interface PostArray {
         createdAt: Date;
         updatedAt: Date;
         publishedAt: Date;
+        is_pinned:boolean;
     }[];
     meta: {}
 }
