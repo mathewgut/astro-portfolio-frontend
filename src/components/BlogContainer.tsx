@@ -51,6 +51,14 @@ export default function BlogContainer() {
                     <img className="h-5 w-5" src="/x.svg" />
                 </article>
             }
+
+            {posts && posts.data.length == 0 &&
+                <article className="flex h-full flex-col justify-center items-center animate-bounce">
+                    <p>No posts published</p>
+                    <img className="h-5 w-5" src="/x.svg" />
+                </article>
+            }
+
             { posts && posts.data.length > 0 && 
                    <section className="flex flex-col gap-6">
                    {
