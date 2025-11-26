@@ -132,8 +132,9 @@ function ProjectItem ({item, onClickFn}:{item:WorkArray["data"][number], onClick
             <p className="text-sm font-[jetbrains-mono] text-neutral-800">
                 {truncateText(item.description, 125) }
             </p>
-
-
+            
+            <div className="flex items-center justify-center gap-6 sm:items-baseline sm:flex-col sm:gap-0 ">
+                
             <div className="flex flex-col sm:flex-row sm:gap-6 mt-6 mb-2 sm:mb-0 capitalize text-sm items-center hover:cursor-pointer">
                 <p className="text-black mb-2 sm:mb-0">// TAGS</p>
                 <div className="flex flex-col sm:flex-row gap-2">
@@ -147,9 +148,9 @@ function ProjectItem ({item, onClickFn}:{item:WorkArray["data"][number], onClick
                 </div>
                 
             </div>
-            <div className="flex flex-col sm:flex-row items-center sm:gap-4 text-sm mt-2">
-                    <p className="w-fit whitespace-nowrap mb-2 sm:mb-0">// STACK</p>
-                    <ul className="text-xs flex flex-col gap-1 justify-center pl-2 sm:pl-0 sm:flex-row sm:gap-4">
+            <div className="flex flex-col sm:flex-row justify-center sm:gap-4 text-sm mt-2">
+                    <p className="text-left w-fit whitespace-nowrap mb-2 sm:mb-0">// STACK</p>
+                    <ul className="text-xs flex flex-col gap-1 items-center sm:items-baseline justify-center sm:pl-0 sm:flex-row sm:gap-4">
                         { item.technologies &&
                             item.technologies.split(",").map((tech, index) =>
                                 <li>{tech}</li>
@@ -158,6 +159,7 @@ function ProjectItem ({item, onClickFn}:{item:WorkArray["data"][number], onClick
                     </ul>
                     
                 </div>
+            </div>
             
         </div>
     )

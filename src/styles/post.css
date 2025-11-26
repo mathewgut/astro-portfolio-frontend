@@ -43,3 +43,7 @@ code {
 main > p > a {
     @apply text-blue-700 hover:underline transition ease-in-out duration-200
 };
+
+p {
+    @apply text-sm leading-7;
+}
