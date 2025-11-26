@@ -150,7 +150,7 @@ function ProjectItem ({item, onClickFn}:{item:WorkArray["data"][number], onClick
             </div>
             <div className="flex flex-col sm:flex-row justify-center sm:gap-4 text-sm mt-2">
                     <p className="text-left w-fit whitespace-nowrap mb-2 sm:mb-0">// STACK</p>
-                    <ul className="text-xs flex flex-col gap-1 items-center sm:items-baseline justify-center sm:pl-0 sm:flex-row sm:gap-4">
+                    <ul className="text-xs flex flex-col gap-1 items-center justify-center sm:pl-0 sm:flex-row sm:gap-4">
                         { item.technologies &&
                             item.technologies.split(",").map((tech, index) =>
                                 <li>{tech}</li>
