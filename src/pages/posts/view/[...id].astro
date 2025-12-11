@@ -76,10 +76,11 @@ if(id){
 else{
     error = true;
 }
+
 ---
 
 
-<BaseLayout pageTitle="post">
+<BaseLayout pageTitle={postData.title}>
     
     { error &&
         <section class="flex flex-col justify-center items-center mt-10">
