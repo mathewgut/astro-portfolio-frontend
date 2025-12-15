@@ -80,7 +80,7 @@ else{
 ---
 
 
-<BaseLayout pageTitle={postData.title}>
+<BaseLayout pageTitle={postData ? postData.title : "A blog post" }>
     
     { error &&
         <section class="flex flex-col justify-center items-center mt-10">

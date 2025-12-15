@@ -16,14 +16,15 @@ export default function BlogPostAnimation({children}: {children: React.ReactNode
              }}
             transition={{ duration: 1.5, delay: 0  }}
             />
-
+            {/*
                 <motion.div // clip glitch div
                     initial={{ opacity: 0, backgroundColor: "#FFFFFF" }}
                     className="fixed top-0 left-0 h-1/2 w-1/2 bg-white" 
                     animate={{
                         opacity: [1,1,1,1,1,1,1,1,1,0],
                         y: [0, 100, 0, 300, 0, 50, 400, -1, 0, 0],
-                    /*
+                        x: [0, 100, 0, 300, 0, 50, 400, -1, 0, -40000],
+                    
                        backgroundColor: [
                             "#FFFFFF", // white
                             "#00FFF7", // neon blue-green
@@ -38,7 +39,8 @@ export default function BlogPostAnimation({children}: {children: React.ReactNode
                             "#39FF14", // bright green
                             "#00FFF7"  // neon blue-green
                             ]
-                    =*/
+                    =
+                
                     }}
                     transition={{ duration: 0.3, delay: 1.7}}
                 />
@@ -49,11 +51,13 @@ export default function BlogPostAnimation({children}: {children: React.ReactNode
                 animate={{
                     opacity: [1,1,1,1,1,1,1,1,1,0],
                     y: [0, -100, 0, -100, 0, 50, -400, -1, 0, 0],
+                    x: [0, -100, 0, -100, 0, 50, -400, -1, 0, -400]
                    // backgroundColor: ["#FFFFFF", "#CCCCCC", "#999999", "#666666", "#333333", "green", "#333333", "#666666", "##e820fa", "#CCCCCC", "#FFFFFF"]
                 }}
                 className="fixed bottom-0 right-0 h-1/2 w-1/2 bg-white" 
                 transition={{ duration: 0.3, delay: 1.7  }}
             />
+            */}
             <motion.main // blog content
                 initial={{ opacity: 0 }}
                 animate={{ 
