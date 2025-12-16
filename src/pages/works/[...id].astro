@@ -133,7 +133,7 @@ const workItemDesc = marked.parse(workItem?.data.description || "");
                 { workItem.data.link &&
                     <span class="flex items-center gap-2 mt-2">
                         <img class="h-4.5 w-4.5" src="/link.svg" alt="link icon" />
-                        <a class="hover:cursor-pointer hover:underline text-xs" href={workItem.data.link}>
+                        <a class="hover:cursor-pointer hover:underline text-xs break-all" href={workItem.data.link}>
                             {workItem.data.link}
                         </a>
                     </span>
