@@ -29,7 +29,7 @@ ol {
 }
 
 img {
-    @apply w-full h-50 object-cover border-4 border-black my-4;
+    @apply w-full h-fit object-cover border-4 border-black my-4;
 }
 
 blockquote {

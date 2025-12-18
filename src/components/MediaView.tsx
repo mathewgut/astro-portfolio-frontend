@@ -1,6 +1,5 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
 import type { DocumentImage } from "./ItemTypes";
-import { domainEndpoint } from "./utils";
 
 // for strapi media
 export default function MediaView({media}:{media:DocumentImage[]}) {
