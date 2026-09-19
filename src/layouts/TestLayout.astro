@@ -1,0 +1,30 @@
+---
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+import BITSocProjectCard from "../components/BITSocProjectCard";
+
+const {pageTitle} = Astro.props;
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/square-favicon.png?" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle}</title>
+	</head>
+	<body class="flex flex-col items-center h-svh w-full font-[terminal] ">
+		<BITSocProjectCard />
+		
+		{/* 
+		<main class="flex px-4 py-10 justify-center items-center h-full w-full bg-black text-white">
+		    <div class="flex justify-center items-center  w-11/12 h-11/12 md:w-6/8 md:h-6/8 border-8 rounded-3xl min-h-100 flex-col overflow-hidden"> 
+                <slot />
+            </div>
+        </main>
+		*/}
+	</body>
+</html>

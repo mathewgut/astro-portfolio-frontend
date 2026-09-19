@@ -1,0 +1,39 @@
+---
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+import TestLayout from "../layouts/TestLayout.astro";
+
+const {pageTitle} = Astro.props;
+
+---
+<TestLayout pageTitle={pageTitle}>
+   <article class="relative flex flex-col h-full w-full overflow-hidden rounded-lg font-[jetbrains-mono]
+ 	after:pointer-events-none 
+    after:absolute 
+    after:inset-0 
+    after:rounded-lg 
+    after:z-20
+    /* We use arbitrary shadow values to create two colored inset layers */
+    after:shadow-[inset_3px_0_4px_rgba(239,68,68,0.5),inset_-3px_0_4px_rgba(34,211,238,0.5)]  
+ 
+   ">
+        
+        <img 
+            src="/bitsoc-screenshot.png" 
+            alt="Test Image" 
+            class="absolute inset-0 w-full h-full object-cover" 
+        />
+
+        <section class="absolute bottom-0 left-0 w-full h-1/2  flex flex-col justify-end p-8 
+            bg-gradient-to-t from-black/80 via-black/60 to-transparent 
+            backdrop-blur-xs 
+            [mask-image:linear-gradient(to_top,black_60%,transparent)]">
+            
+            <h2 class="text-2xl font-bold mb-2 text-white">BITSoc.ca</h2>
+            <p class="text-base max-w-200 text-gray-200">
+                A website built for the Bachelors of Information Technology Society at Carleton University.
+            </p>
+        </section>
+    </article>
+</TestLayout>
