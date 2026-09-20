@@ -1,8 +1,9 @@
 ---
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
-import IndexButton from "../components/IndexButton.tsx";
+import IndexSelections from "../components/IndexSelections"
 import "../styles/global.css";
+import PixelSnow from "../components/PixelSnow";
 
 const pageTitle = "Mathew Gutoskie"
 
@@ -16,23 +17,27 @@ const pageTitle = "Mathew Gutoskie"
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
 	</head>
-	<body class="flex flex-col justify-center h-svh w-svw font-[vcr]">
-		<Navigation />
-		<main class="flex flex-col px-4 items-center justify-center h-full w-full ">
-				<h1 class="pb-8">mgut</h1>
-			<section class="flex flex-col items-center">
-
-				<section class="uppercase flex w-70 flex-wrap gap-2 justify-center items-center">
-					<IndexButton client:only text="Blog" link="/blog"/>
-					<IndexButton client:only text="Work" link="/work"/>
-					<IndexButton client:only text="About" link="/about"/>
-					<IndexButton client:only text="Contact" link="/contact"/>
-				</section>
-				<a href="https://github.com/mathewgut/astro-portfolio-frontend" class="mt-10 text-xs hover:underline">
-					Frontend repository
-				</a>
+	<body class="flex flex-col justify-center h-svh w-svw">
+		<PixelSnow client:load
+			color="#ffffff"
+			flakeSize={0.013}
+			minFlakeSize={1.25}
+			pixelResolution={200}
+			speed={0.8}
+			density={0.15}
+			direction={95}
+			brightness={0.9}
+			depthFade={5.5}
+			farPlane={20}
+			gamma={0.4545}
+			variant="square"
+		/>
+		<main class="flex flex-col md:flex-row px-4 items-center justify-evenly md:justify-center h-full w-full z-10">
+			<section class="flex-col w-3/4 justify-center items-center pb-2 md:pb-0">
+				<h1 class="text-center md:text-left text-7xl pb-1">mgut</h1>
+				<p class="text-center md:text-left">i make and sometimes write things</p>
 			</section>
+			<IndexSelections />
 		</main>
-		<Footer />
 	</body>
 </html>

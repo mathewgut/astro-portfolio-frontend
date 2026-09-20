@@ -16,11 +16,8 @@ const {pageTitle} = Astro.props;
 		<title>{pageTitle}</title>
 	</head>
 	<body class="flex flex-col items-center h-svh w-full font-[vcr] ">
-		<Navigation />
 		<main class="flex px-4 py-10 justify-center h-full w-full overflow-x-hidden">
 			<slot />
-
 		</main>
-		<Footer />
 	</body>
 </html>
